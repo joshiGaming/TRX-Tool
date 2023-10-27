@@ -1,0 +1,28 @@
+environment:
+  docker_image: ulm-dev.zuken.com/ci-build-image:VS2022
+  matrix: 
+  - job_name: make
+    build_sh: >-
+      cd XmlMerge;
+      sonarqube-dotnet publish -r win-x64 -p:PublishSingleFile=false --self-contained false --property:PublishDir=./build/ 
+  - job_name: unittest
+    job_depends_on: make
+    test_sh: >-
+      cd XmlMergeTests; 
+      dotnet test --logger "html;LogFileName=result.html" --logger "trx;LogFileName=result.trx"  --results-directory ./results/;
+    artifacts_unittest_html: ./XmlMergeTests\results\result.html;
+    artifacts_unittest_trx: ./XmlMergeTests\results\result.trx;
+  - job_name: testmerge
+    job_depends_on: make 
+    test_sh: >-
+      cd XmlMergeTests;
+      ./build/XmlMerge.exe ../test_data/out ../test_data/trx;
+      cd -;  
+      gen-report ./test_data/out/ ./new/;            
+    artifacts_new: ./new/;
+  - job_name: testprint
+    job_depends_on: testmerge
+    test_sh: >-
+      cd XmlMergeTests;
+      ./build/XmlMerge.exe -print ../test_data/out/output.trx > ./output.txt;
+    artifacts_print: ./XmlMergeTests/output.txt;

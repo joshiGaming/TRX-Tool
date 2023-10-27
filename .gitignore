@@ -1,0 +1,15 @@
+
+examples/
+
+
+*.obj
+*.dll
+*.pdb
+*.exe
+.vs/
+
+XmlMerge/build/
+XmlMerge/bin/
+XmlMerge/obj/
+XmlMergeTests/obj/
+XmlMergeTests/bin/

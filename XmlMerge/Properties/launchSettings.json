@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "XmlMerge": {
+      "commandName": "Project",
+      "commandLineArgs": "merge ../test_data/out/ ../test_data/trx -transform",
+      "workingDirectory": "C:\\Users\\jhonz\\Documents\\GitHub\\trx-merge\\XmlMerge"
+    }
+  }
+}
