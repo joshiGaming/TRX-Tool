@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace HtmlTransformer
 {
-    internal class ResourceReader
+    internal static class ResourceReader
     {
         internal static string LoadTextFromResource(string name)
         {
@@ -18,8 +18,7 @@ namespace HtmlTransformer
 
         internal static Stream StreamFromResource(string name)
         {
-            Console.WriteLine(name);
-            return Assembly.GetExecutingAssembly().GetManifestResourceStream("XmlMerge." + name);
+            return Assembly.GetExecutingAssembly().GetManifestResourceStream("XmlMerge." + name)!;
        
         }
     }

@@ -75,12 +75,12 @@ namespace MergeXML
             }
         }
 
-        static XDocument Merge(string pathto, string pathfrom)
+        static XDocument Merge(string pathfrom)
         {
             List<string> files = new List<string>();
             XDocument xml1;
             XDocument xml2;
-            DateTime timestamp = DateTime.Now;
+       
             Console.WriteLine("Validating...");
 
             //Validating
@@ -88,8 +88,10 @@ namespace MergeXML
             {          
                     try
                     {
+                      
                         XDocument.Load(trxFilePath);
                         files.Add(trxFilePath);
+                        
                     }
                     catch 
                     {
@@ -98,6 +100,13 @@ namespace MergeXML
                     }             
               
             }
+
+            if(files.Count < 1 ) {
+                Console.Error.WriteLine("Not Enough valid files Found at " + Path.GetFullPath( pathfrom));
+                System.Environment.Exit(-1);
+              
+            }
+
             xml1 = XDocument.Load(files[0]);
 
             //Mergen
@@ -114,8 +123,7 @@ namespace MergeXML
 
                 }
             }
-            string path = Path.Join(pathto, @"output.trx");
-          
+        
           
             XNamespace nameSpace = xml1.Root!.GetDefaultNamespace().NamespaceName;
             XElement counter = xml1.Descendants(nameSpace + "Counters").First();
@@ -126,7 +134,7 @@ namespace MergeXML
              + counter.Attribute("passed")! .Value + " Passed, "
              + counter.Attribute("executed")!.Value + " Executed, ");
              Console.WriteLine("===========================================================================");
-            Console.WriteLine("DONE: finished in: " + DateTime.Now.Subtract(timestamp).TotalSeconds + " Seconds!");
+           
             return xml1;
 
         }
@@ -158,6 +166,7 @@ namespace MergeXML
                            
                                         
                         Console.Write("\n");
+                            continue;
                             
                         }
 
@@ -198,6 +207,7 @@ namespace MergeXML
                         Console.Write("  >>  " + unitTestResult.Element(nameSpace + "Output")!.Element(nameSpace + "ErrorInfo")!.Element(nameSpace + "StackTrace")!.Value);
 
                     }
+                    break;
                 }
             
             }
@@ -205,8 +215,9 @@ namespace MergeXML
         }
 
         static int Main(string[] args)
-        { 
-            if(args.Length <2) {
+        {
+            DateTime timestamp = DateTime.Now;
+            if (args.Length <2) {
                 PrintHelp();
                 return 0;
             }
@@ -214,19 +225,21 @@ namespace MergeXML
             
             string command =  args[0] ;
             string pathto = args[1];
-            string pathfrom = args[2] ;
+            string pathfrom = args.ElementAtOrDefault(2);
 
            if(command == "print")
             {
-                if (!File.Exists(pathfrom))
+                if (!File.Exists(pathto))
                 {
                     Console.Error.WriteLine("File (2) does not exist...");
                     return -1;
                 }
 
-                GetTestResults(pathfrom);
+                GetTestResults(pathto);
                 
             }
+
+
            if(command == "merge")
             {
                 if (!Directory.Exists(pathto))
@@ -240,36 +253,37 @@ namespace MergeXML
                     return -1;
                 }
 
-              XDocument xdoc =  Merge(pathto, pathfrom);
+              XDocument xdoc =  Merge(pathfrom);
 
                 foreach (string arg in args)
                 {
                     if (arg == "-transform")
                     {
-                        
+                      
 
-                        XmlDocument xmldoc = LinqHelper.ToXmlDocument(xdoc);
+
+                        XmlDocument xmldoc = DocumentExtensions.ToXmlDocument(xdoc);
                         HtmlTransformer.HtmlTransformer.Init(pathto, xmldoc);
-                        return 0;
+                    
                     }
                 }
 
                 Console.WriteLine("Writing Xml ==========================> " + pathto);
-                xdoc.Save(pathto);
+                xdoc.Save(Path.Join(pathto, @"output.trx"));
+
             }
 
-       
+            Console.WriteLine("DONE: finished in: " + DateTime.Now.Subtract(timestamp).TotalSeconds + " Seconds!");
 
-           
+
             return 0;
        
         }
 
       public static void PrintHelp() {
 
-            Console.WriteLine("./XmlMerge.exe merge [INPUT_DIRECTORY] [OUTPUT_DIRECTORY] [-transform <OUTPUT_DIRECTORY>]");
-            Console.WriteLine("./XmlMerge.exe print [FILE]");
-            Console.WriteLine("./XmlMerge.exe -transform [FILE]");
+            Console.WriteLine("XmlMerge.exe merge <INPUT_DIRECTORY> <OUTPUT_DIRECTORY> [-transform]");
+            Console.WriteLine("XmlMerge.exe print <FILE>");
         }
 
     }

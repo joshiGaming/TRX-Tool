@@ -2,7 +2,7 @@
   "profiles": {
     "XmlMerge": {
       "commandName": "Project",
-      "commandLineArgs": "merge ../test_data/out/ ../test_data/trx -transform",
+      "commandLineArgs": "print ..\\test_data\\out\\outpdut.trx",
       "workingDirectory": "C:\\Users\\jhonz\\Documents\\GitHub\\trx-merge\\XmlMerge"
     }
   }

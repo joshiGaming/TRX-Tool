@@ -16,13 +16,15 @@ environment:
     job_depends_on: make 
     test_sh: >-
       cd XmlMergeTests;
-      ./build/XmlMerge.exe ../test_data/out ../test_data/trx;
-      cd -;  
-      gen-report ./test_data/out/ ./new/;            
-    artifacts_new: ./new/;
+      ./build/XmlMerge.exe merge ../test_data/out ../test_data/trx -transform;
+      cd -;
+      gen-report ./test_data/out/ ./compare/;           
+    artifacts_output_trx: ./test_data/out/output.trx;
+    artifacts_compare_html: ./compare/;
+    artifacts_output_html: ./test_data/out/output.html;
   - job_name: testprint
     job_depends_on: testmerge
     test_sh: >-
       cd XmlMergeTests;
-      ./build/XmlMerge.exe -print ../test_data/out/output.trx > ./output.txt;
+      ./build/XmlMerge.exe print ../test_data/out/output.trx > ./output.txt;
     artifacts_print: ./XmlMergeTests/output.txt;

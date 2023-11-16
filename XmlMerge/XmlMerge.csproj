@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="functions.js" />
+    <None Remove="Html.xslt" />
     <None Remove="Test.xml.htm" />
     <None Remove="Trxer.css" />
     <None Remove="Trxer.xslt" />
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="functions.js" />
+    <EmbeddedResource Include="Html.xslt" />
     <EmbeddedResource Include="Test.xml.htm" />
     <EmbeddedResource Include="Trxer.css" />
     <EmbeddedResource Include="Trxer.xslt" />
@@ -36,6 +38,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TestPlatform" Version="17.9.0-pre" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.7.2" />
   </ItemGroup>
 
 </Project>

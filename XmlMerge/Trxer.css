@@ -253,9 +253,6 @@ td.slowest {
     width: 170px;
 }
 
-#ReportsTable th {
-}
-
 #TotalPassed {
     min-width: 30px;
     width: auto;

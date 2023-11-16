@@ -4,6 +4,9 @@
     <_LastSelectedProfileId>C:\Users\jhonz\Documents\GitHub\trx-merge\XmlMerge\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Html.xslt">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Trxer.xslt">
       <SubType>Designer</SubType>
     </EmbeddedResource>

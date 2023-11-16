@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace custom
 {
-     class CustomFunctions
+     class TrxerFunctions
     {
-        public string RemoveAssemblyName(string asm)
+        public static string RemoveAssemblyName(string asm)
         {
             if (asm.IndexOf(',') > 0)
             {
@@ -20,7 +20,7 @@ namespace custom
                 return asm;
             }
         }
-        public string RemoveNamespace(string asm)
+        public static string RemoveNamespace(string asm)
         {
             if (asm.IndexOf(',') > 0)
             {
@@ -29,7 +29,7 @@ namespace custom
             }
             return asm;
         }
-        public string GetShortDateTime(string time)
+        public static string GetShortDateTime(string time)
         {
             if (string.IsNullOrEmpty(time))
             {
@@ -39,7 +39,7 @@ namespace custom
             return DateTime.Parse(time).ToString();
         }
 
-        private string ToExtactTime(double ms)
+        private static string ToExtactTime(double ms)
         {
             if (ms < 1000)
                 return ms + " ms";
@@ -53,7 +53,7 @@ namespace custom
             return string.Format("{0:0.00} hours", TimeSpan.FromMilliseconds(ms).TotalHours);
         }
 
-        public string ToExactTimeDefinition(string duration)
+        public static string ToExactTimeDefinition(string duration)
         {
             if (string.IsNullOrEmpty(duration))
             {
@@ -63,21 +63,23 @@ namespace custom
             return ToExtactTime(TimeSpan.Parse(duration).TotalMilliseconds);
         }
 
-        public string ToExactTimeDefinition(string start, string finish)
+        public static string ToExactTimeDefinition(string start, string finish)
         {
             TimeSpan datetime = DateTime.Parse(finish) - DateTime.Parse(start);
             return ToExtactTime(datetime.TotalMilliseconds);
         }
 
-        public string CurrentDateTime()
+        public static string CurrentDateTime()
         {
             return DateTime.Now.ToString();
         }
 
-        public string ExtractImageUrl(string text)
+        public static string ExtractImageUrl(string text)
         {
-            Match match = Regex.Match(text, "('|\")([^\\s]+(\\.(?i)(jpg|png|gif|bmp)))('|\")",
-               RegexOptions.IgnoreCase);
+           
+
+             Match match = Regex.Match(text, "('|\")([^\\s]+(\\.(?i)(jpg|png|gif|bmp)))('|\")",
+               RegexOptions.IgnoreCase | RegexOptions.NonBacktracking);
 
 
             if (match.Success)
