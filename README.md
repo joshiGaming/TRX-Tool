@@ -7,7 +7,7 @@ Merge aus mehreren TRX Dateien (Joshua Honz / Praktikant)
 ## arguments
 
 Merge:
-`./XmlMerge.exe merge <OUTPUTDIRECTORY> <INPUTDIRECTORY> [-transform]`
+`./XmlMerge.exe merge <OUTPUTDIRECTORY> <INPUTDIRECTORY> [-transform]` <br>
 Print:
 `./XmlMerge.exe print <FILE>`
 
