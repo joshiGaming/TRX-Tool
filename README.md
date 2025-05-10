@@ -1,6 +1,6 @@
 # trx-merge
 
-Merge aus mehreren TRX Dateien (Joshua Honz / Praktikant)
+Merge aus mehreren TRX Dateien (Joshua Honz)
 
 [XmlMerge in Nodejs](https://ulm-dev.zuken.com/jhonz/XmlMergerNodejs)
 
